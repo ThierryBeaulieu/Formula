@@ -20,8 +20,10 @@ fn handle_connection(mut stream: TcpStream) {
 
     if buffer.starts_with(get) {
         let contents = fs::read_to_string("index.html").unwrap();
+        let status_line = "HTTP/1.1 200 OK";
         let response = format!(
-            "HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n{}",
+            "{}\r\nContent-Length: {}\r\n\r\n{}",
+            status_line,
             contents.len(),
             contents
         );
@@ -30,9 +32,8 @@ fn handle_connection(mut stream: TcpStream) {
     } else {
         let contents = fs::read_to_string("error.html").unwrap();
         let status_line = "HTTP/1.1 404 NOT FOUND";
-
         let response = format!(
-            "{}\r\nHTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n{}",
+            "{}\r\nContent-Length: {}\r\n\r\n{}",
             status_line,
             contents.len(),
             contents
