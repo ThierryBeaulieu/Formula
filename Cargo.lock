@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "Formula"
+name = "formula"
 version = "0.1.0"
