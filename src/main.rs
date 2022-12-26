@@ -24,11 +24,19 @@ fn handle_connection(mut stream: TcpStream) {
     );
 
     let get = b"GET / HTTP/1.1\r\n";
+    let get_javascript = b"GET /script.js HTTP/1.1\r\n";
+    let get_css = b"GET /styles.css HTTP/1.1\r\n";
     let status_line;
     let contents;
     
     if buffer.starts_with(get) {
         contents = fs::read_to_string("index.html").unwrap();
+        status_line = "HTTP/1.1 200 OK";
+    } else if buffer.starts_with(get_css) {
+        contents = fs::read_to_string("styles.css").unwrap();
+        status_line = "HTTP/1.1 200 OK";
+    } else if buffer.starts_with(get_javascript) {
+        contents = fs::read_to_string("script.js").unwrap();
         status_line = "HTTP/1.1 200 OK";
     } else {
         contents = fs::read_to_string("error.html").unwrap();
