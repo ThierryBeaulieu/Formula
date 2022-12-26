@@ -1,0 +1,1 @@
+const title = getElementById("title");
